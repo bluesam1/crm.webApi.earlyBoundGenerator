@@ -68,6 +68,10 @@
                 <Grid Margin="0,5,0,0">
                     <CheckBox Content="Include Option Sets" IsChecked="{Binding IncludeOptionSets}"></CheckBox>
                 </Grid>
+                
+                <Grid Margin="0,5,0,0">
+                    <CheckBox Content="Generate Base Entity Class" IsChecked="{Binding GenerateBaseEntityClass}"></CheckBox>
+                </Grid>
 
                 <Grid Margin="0,5,0,0">
                     <Button Command="{Binding SaveCommand}">Save Settings</Button>

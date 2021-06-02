@@ -6,7 +6,7 @@ using GRomash.CrmWebApiEarlyBoundGenerator.Infrastructure.Repository;
 
 namespace GRomash.CrmWebApiEarlyBoundGenerator.Infrastructure.Service
 {
-   
+
 
     public class GenerationService
     {
@@ -28,16 +28,17 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.Infrastructure.Service
         /// Generates the entities.
         /// </summary>
         /// <param name="entitiesGenerationSettings">The entities generation settings.</param>
-        public void GenerateEntities(EntitiesGenerationSettings entitiesGenerationSettings)
+        public void GenerateEntities(EntitiesGenerationSettings entitiesGenerationSettings, bool generateEntityBaseClass)
         {
             var fieldsFactory = new FieldsFactory();
             var propsFactory = new PropertiesFactory(entitiesGenerationSettings.Entities, _metadataRepository);
             var entityClassBuilder = new EntityClassBuilder(entitiesGenerationSettings.OutFolder);
             var entityModelBuilder = new EntityModelBuilder(entitiesGenerationSettings.OutFolder);
             var classFactory = new ClassFactory();
-            
+
             //build Entity class
-            entityClassBuilder.Create(entitiesGenerationSettings.NameSpace);
+            if (generateEntityBaseClass)
+                entityClassBuilder.Create(entitiesGenerationSettings.NameSpace);
 
             foreach (var entityMetadata in entitiesGenerationSettings.EntityMetadatas)
             {

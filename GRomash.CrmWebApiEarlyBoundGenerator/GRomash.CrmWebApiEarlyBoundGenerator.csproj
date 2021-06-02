@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GRomash.CrmWebApiEarlyBoundGenerator</RootNamespace>
-    <AssemblyName>GRomash.CrmWebApiEarlyBoundGenerator</AssemblyName>
+    <AssemblyName>BlueSam.CrmWebApiEarlyBoundGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>

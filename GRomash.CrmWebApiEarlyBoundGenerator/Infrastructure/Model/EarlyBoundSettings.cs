@@ -9,6 +9,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.Infrastructure.Model
         public string ResultFolder { get; set; }
 
         public bool IncludeOptionSets { get; set; }
+        public bool GenerateBaseEntityClass { get; set; }
 
         public IList<string> Entitites { get; set; } = new List<string>();
     }

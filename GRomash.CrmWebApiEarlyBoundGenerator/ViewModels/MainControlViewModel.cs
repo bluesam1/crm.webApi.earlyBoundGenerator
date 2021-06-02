@@ -93,6 +93,10 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
         /// </summary>
         private bool _includeOptionSets;
         /// <summary>
+        /// The include option sets
+        /// </summary>
+        private bool _generateBaseEntityClass;
+        /// <summary>
         /// The folder
         /// </summary>
         private const string Folder = nameof(CrmWebApiEarlyBoundGenerator);
@@ -149,7 +153,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
             get => _isLoading;
             set
             {
-                _isLoading = value; 
+                _isLoading = value;
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
@@ -203,7 +207,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
         /// The generate command.
         /// </value>
         public ICommand GenerateCommand => new CommandBase(Generate);
-     
+
         /// <summary>
         /// Gets the select file command.
         /// </summary>
@@ -239,7 +243,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
             get => _settingsPath;
             set
             {
-                _settingsPath = value; 
+                _settingsPath = value;
                 OnPropertyChanged(nameof(SettingsPath));
                 LoadSettings();
             }
@@ -272,7 +276,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
             get => _resultFolder ?? Path.Combine(Directory.GetCurrentDirectory(), "CrmWebApiEarlyBoundGenerator", "Result");
             set
             {
-                _resultFolder = value; 
+                _resultFolder = value;
                 OnPropertyChanged(nameof(ResultFolder));
             }
         }
@@ -286,7 +290,8 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
         public string OptionSetsResultFolder
         {
             get => Path.Combine(ResultFolder, "OptionSets");
-            set {
+            set
+            {
                 _optionSetsResultFolder = value;
                 OnPropertyChanged(nameof(OptionSetsResultFolder));
             }
@@ -324,6 +329,21 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [include option sets].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [include option sets]; otherwise, <c>false</c>.
+        /// </value>
+        public bool GenerateBaseEntityClass
+        {
+            get => _generateBaseEntityClass;
+            set
+            {
+                _generateBaseEntityClass = value;
+                OnPropertyChanged(nameof(GenerateBaseEntityClass));
+            }
+        }
 
         /// <summary>
         /// Generates this instance.
@@ -366,7 +386,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
                 Entities = selectedEntities,
                 EntityMetadatas = metadata,
                 OutFolder = ResultFolder
-            });
+            }, GenerateBaseEntityClass);
 
             if (IncludeOptionSets)
             {
@@ -443,10 +463,11 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
             Namespace = _earlyBoundSettings.Namespace;
             ResultFolder = _earlyBoundSettings.ResultFolder;
             IncludeOptionSets = _earlyBoundSettings.IncludeOptionSets;
+            GenerateBaseEntityClass = _earlyBoundSettings.GenerateBaseEntityClass;
             SetEntities();
         }
 
-        
+
         /// <summary>
         /// Saves the settings.
         /// </summary>
@@ -471,6 +492,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
             _earlyBoundSettings.Entitites = GetSelectedEntities();
             _earlyBoundSettings.ResultFolder = ResultFolder;
             _earlyBoundSettings.IncludeOptionSets = IncludeOptionSets;
+            _earlyBoundSettings.GenerateBaseEntityClass = GenerateBaseEntityClass;
 
             _earlyBoundSettingsRepository.Save(SettingsPath, _earlyBoundSettings);
 
@@ -484,7 +506,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
         /// </summary>
         private void SelectResultFolder()
         {
-            using(var fbd = new FolderBrowserDialog())
+            using (var fbd = new FolderBrowserDialog())
             {
                 DialogResult result = fbd.ShowDialog();
 

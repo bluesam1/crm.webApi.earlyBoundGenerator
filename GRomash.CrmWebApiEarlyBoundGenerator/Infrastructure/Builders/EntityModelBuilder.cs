@@ -35,6 +35,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.Infrastructure.Builders
             var type = new CodeTypeDeclaration(model.EntityName)
             {
                 IsClass = true,
+                IsPartial = true
             };
 
             type.CustomAttributes.Add(new CodeAttributeDeclaration("ExcludeFromCodeCoverageAttribute"));

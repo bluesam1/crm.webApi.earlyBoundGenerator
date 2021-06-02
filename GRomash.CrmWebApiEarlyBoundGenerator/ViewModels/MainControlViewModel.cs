@@ -379,13 +379,15 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
             var optionSetMetadata = _metadataRepository.GetOptionSetMetadata(selectedEntities);
 
             _outputLoggerService.Info($"Generating entities");
-
+            var resultFolder = ResultFolder;
+            if (resultFolder.StartsWith("."))
+                resultFolder = new DirectoryInfo(Path.Combine(new FileInfo(SettingsPath).DirectoryName, resultFolder)).FullName;
             _generationService.GenerateEntities(new EntitiesGenerationSettings()
             {
                 NameSpace = Namespace,
                 Entities = selectedEntities,
                 EntityMetadatas = metadata,
-                OutFolder = ResultFolder
+                OutFolder = resultFolder
             }, GenerateBaseEntityClass);
 
             if (IncludeOptionSets)

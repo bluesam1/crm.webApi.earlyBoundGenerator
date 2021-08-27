@@ -281,21 +281,6 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
             }
         }
 
-        /// <summary>
-        /// Gets or sets the result folder.
-        /// </summary>
-        /// <value>
-        /// The result folder.
-        /// </value>
-        public string OptionSetsResultFolder
-        {
-            get => Path.Combine(ResultFolder, "OptionSets");
-            set
-            {
-                _optionSetsResultFolder = value;
-                OnPropertyChanged(nameof(OptionSetsResultFolder));
-            }
-        }
 
         /// <summary>
         /// Gets or sets the output.
@@ -381,7 +366,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
             _outputLoggerService.Info($"Generating entities");
             var resultFolder = ResultFolder;
             if (resultFolder.StartsWith("."))
-                resultFolder = new DirectoryInfo(Path.Combine(new FileInfo(SettingsPath).DirectoryName, resultFolder)).FullName;
+                resultFolder = new DirectoryInfo(Path.Combine(new FileInfo(SettingsPath).DirectoryName, resultFolder)).FullName + resultFolder;
             _generationService.GenerateEntities(new EntitiesGenerationSettings()
             {
                 NameSpace = Namespace,
@@ -396,7 +381,7 @@ namespace GRomash.CrmWebApiEarlyBoundGenerator.ViewModels
                 {
                     Metadata = optionSetMetadata,
                     NameSpace = Namespace,
-                    OutFolder = OptionSetsResultFolder
+                    OutFolder = Path.Combine(resultFolder, "OptionSets")
                 });
             }
 
